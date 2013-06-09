@@ -1,6 +1,6 @@
 <?
 
-if(strlen($_GET['source']) != '16') exit ('strlen source <> 16');
+if(strlen($_GET['source']) != '8') exit ('strlen source <> 8');
 if(strlen($_GET['key']) != '8') exit ('strlen key <> 8');
 
 $hexSource = $_GET['source']; // 16 символов
@@ -222,17 +222,19 @@ foreach($D as $id=>$row) {
 
 $rs['hexSourceLength'] = strlen($hexSource);
 
-for($i=0; $i < $rs['hexSourceLength']; $i++) {
-	$chr = $hexSource[$i];
-	$convert = base_convert($chr, 16, 2);
+$rs['binSource'] = '';
+for($i=0; $i<strlen($hexSource); $i++) {
+	$num = ord($hexSource[$i]);
 
-	if(strlen($convert) < 4) {
-		while(strlen($convert) < 4) {
-			$convert = 0 . $convert;
+	$bin = base_convert($num, 10, 2);
+
+	if(strlen($bin) < 8) {
+		while(strlen($bin) < 8) {
+			$bin = 0 . $bin;
 		}
 	}
 
-	$rs['binSource'] .= $convert;
+	$rs['binSource'] .= $bin;
 }
 
 $IP = array(
